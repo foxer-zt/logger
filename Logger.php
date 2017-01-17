@@ -40,7 +40,10 @@ class Logger
         $message = $this->requestParams['message'];
         $logFile = $this->createLogFile($logFile);
         $newLogEntry = sprintf("%s: %s",date(self::DATE_FORMAT, time()), $message);
-        if (!file_put_contents($logFile, file_get_contents($logFile) . "\n$newLogEntry")) {
+        $content = isset($this->requestParams['rewrite']) 
+            ? $message
+            : file_get_contents($logFile) . "\n$newLogEntry";
+        if (!file_put_contents($logFile, $content) {
             throw new Exception("Unable to read/write into $logFile file.");
         }
     }
