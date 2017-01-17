@@ -43,7 +43,7 @@ class Logger
         $content = isset($this->requestParams['rewrite']) 
             ? $message
             : file_get_contents($logFile) . "\n$newLogEntry";
-        if (!file_put_contents($logFile, $content) {
+        if (!file_put_contents($logFile, $content)) {
             throw new Exception("Unable to read/write into $logFile file.");
         }
     }
