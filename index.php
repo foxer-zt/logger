@@ -5,10 +5,13 @@ if (isset($_GET['method'])) {
     $logger = new Logger;
     $methodName = $_GET['method'];
     if (method_exists($logger, $methodName) && is_callable([$logger, $methodName])) {
-        $result = call_user_func([$logger, $methodName]);
-
-        if ($result) {
-            echo $result;
+        try {
+            $result = call_user_func([$logger, $methodName]);
+            if ($result) {
+                echo $result;
+            }
+        } catch (Exception $exception) {
+            echo $exception->getMessage();
         }
     }
 } else {
